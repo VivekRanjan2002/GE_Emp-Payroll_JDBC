@@ -48,4 +48,13 @@ public class EmpPayrollTest {
         Assert.assertTrue(averageSalaryByGender.get("M").equals(200000.0000));
         Assert.assertTrue(averageSalaryByGender.get("F").equals(3000000.0000));
     }
+    //UC7
+    @Test
+    public void addNewEmployee_ToDB_andCheck(){
+        EmployeePayrollData emp= new EmployeePayrollData(6,"viv",100000,LocalDate.now());
+        EmployeePayrollService employeePayrollService= new EmployeePayrollService();
+        employeePayrollService.insertTODB(emp);
+        List<EmployeePayrollData> employeePayroll= employeePayrollService.readEmployeePayrollData(DB_IO);
+        Assert.assertEquals(5,employeePayroll.size());
+    }
 }

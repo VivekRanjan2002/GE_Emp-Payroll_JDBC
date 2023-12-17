@@ -147,4 +147,26 @@ public class EmployeePayrollDBService {
         return connection;
     }
 
+    public void insertToDB(EmployeePayrollData emp) {
+        try{
+            Connection connection= this.getConnection();
+            String sql= "insert into employee_payroll values(?,?,?,?,?); ";
+           PreparedStatement preparedStatement= connection.prepareStatement(sql);
+           preparedStatement.setInt(1,emp.id);
+           preparedStatement.setString(2,emp.name);
+           preparedStatement.setInt(3,emp.salary);
+           preparedStatement.setDate(4,Date.valueOf(emp.startDate));
+           try{
+               preparedStatement.executeUpdate();
+               connection.close();
+           }
+           catch (SQLException e){
+               e.printStackTrace();
+           }
+
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EmployeePayrollService {
+
     public enum IOService{CONSOLE_IO,FILE_IO,DB_IO,REST_IO};
     private List<EmployeePayrollData> employeePayrollList;
     private  EmployeePayrollDBService EmployeePayrollDBService;
@@ -50,6 +51,10 @@ public class EmployeePayrollService {
         }
         return  null;
     }
+    public void insertTODB(EmployeePayrollData emp) {
+        EmployeePayrollDBService.insertToDB(emp);
+    }
+
     // return employeePayrolldata from list with name
     private EmployeePayrollData getEmployeePayrollData(String name) {
         return  this.employeePayrollList.stream()
