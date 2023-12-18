@@ -50,11 +50,11 @@ public class EmpPayrollTest {
     }
     //UC7
     @Test
-    public void addNewEmployee_ToDB_andCheck(){
-        EmployeePayrollData emp= new EmployeePayrollData(6,"viv",100000,LocalDate.now());
+    public void givenNewEmp_WhenAdded_ShouldSyncWithDB(){
         EmployeePayrollService employeePayrollService= new EmployeePayrollService();
-        employeePayrollService.insertTODB(emp);
         List<EmployeePayrollData> employeePayroll= employeePayrollService.readEmployeePayrollData(DB_IO);
-        Assert.assertEquals(5,employeePayroll.size());
+        employeePayrollService.addEmployeeToPayroll("viv",100000,LocalDate.now(),'M');
+        boolean result= employeePayrollService.checkEmployeePayrollInSyncWithDB("viv");
+        Assert.assertTrue(result);
     }
 }

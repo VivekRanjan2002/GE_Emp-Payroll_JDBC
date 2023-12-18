@@ -146,27 +146,25 @@ public class EmployeePayrollDBService {
 
         return connection;
     }
-
-    public void insertToDB(EmployeePayrollData emp) {
-        try{
-            Connection connection= this.getConnection();
-            String sql= "insert into employee_payroll values(?,?,?,?,?); ";
-           PreparedStatement preparedStatement= connection.prepareStatement(sql);
-           preparedStatement.setInt(1,emp.id);
-           preparedStatement.setString(2,emp.name);
-           preparedStatement.setInt(3,emp.salary);
-           preparedStatement.setDate(4,Date.valueOf(emp.startDate));
-           try{
-               preparedStatement.executeUpdate();
-               connection.close();
-           }
-           catch (SQLException e){
-               e.printStackTrace();
-           }
+    // add employee's info to the table
+    public EmployeePayrollData addEmployeeToPayroll(String name,int salary,LocalDate startDate,Character gender) {
+        int empId=-1;
+        EmployeePayrollData employeePayrollData=null;
+        String sql= String.format("insert into employee_payroll(name,salary,startDate,gender) values('%s',%d,'%s','%c');",name,salary,startDate,gender);
+       try(Connection connection=this.getConnection()){
+        Statement statement= connection.createStatement();
+        int rowAffected= statement.executeUpdate(sql,Statement.RETURN_GENERATED_KEYS);
+        if(rowAffected==1){
+            ResultSet resultSet= statement.getGeneratedKeys();
+            if(resultSet.next()) empId=resultSet.getInt(1);
 
         }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
+        employeePayrollData= new EmployeePayrollData(empId,name,salary,startDate,gender);
+
+       }
+       catch(SQLException e){
+           e.printStackTrace();
+       }
+       return employeePayrollData;
     }
 }

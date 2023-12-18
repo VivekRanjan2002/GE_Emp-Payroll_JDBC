@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public class EmployeePayrollService {
-
     public enum IOService{CONSOLE_IO,FILE_IO,DB_IO,REST_IO};
     private List<EmployeePayrollData> employeePayrollList;
     private  EmployeePayrollDBService EmployeePayrollDBService;
@@ -51,8 +50,10 @@ public class EmployeePayrollService {
         }
         return  null;
     }
-    public void insertTODB(EmployeePayrollData emp) {
-        EmployeePayrollDBService.insertToDB(emp);
+    //add new employee to payroll table
+    public void addEmployeeToPayroll(String name,int salary,LocalDate startDate, Character gender) {
+        employeePayrollList.add(EmployeePayrollDBService.addEmployeeToPayroll(name,salary,startDate,gender));
+
     }
 
     // return employeePayrolldata from list with name
